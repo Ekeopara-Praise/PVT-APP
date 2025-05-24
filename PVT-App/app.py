@@ -5,7 +5,7 @@ pages = ["Home", "Data", "Match", "Predict", "Settings", "Help"]
 logo_path = None
 styles = {
     "nav": {
-        "background-color": "#667eea",
+        "background-color": "#283747",
         "justify-content": "left",
     },
     "img": {
@@ -17,7 +17,7 @@ styles = {
     },
     "active": {
         "background-color": "white",
-        "color": "var(--text-color)",
+        "color": "black", #"var(--text-color)", # "black", #"var(--text-color)",
         "font-weight": "normal",
         "padding": "14px",
     }
