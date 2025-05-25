@@ -1,1 +1,1 @@
-streamlit-navigation-bar==3.3.0
+streamlit_navigation_bar==3.3.0
