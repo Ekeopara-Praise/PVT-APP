@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit_navigation_bar
 from streamlit_navigation_bar import st_navbar
 pages = ["Home", "Data", "Match", "Predict", "Settings", "Help"]
 
