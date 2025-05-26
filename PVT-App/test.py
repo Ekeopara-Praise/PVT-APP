@@ -1,9 +1,12 @@
 import streamlit as st
-# import streamlit_navigation_bar
+# Make sure this import works in your deployment environment
 from streamlit_navigation_bar import st_navbar
-pages = ["Home", "Data", "Match", "Predict", "Settings", "Help"]
 
-logo_path = None
+# Define your navigation pages
+pages = ["Home", "Data", "Match", "Predict", "Settings", "Help"]
+logo_path = None  # Optional logo
+
+# Define styling for the navigation bar
 styles = {
     "nav": {
         "background-color": "#283747",
@@ -18,26 +21,31 @@ styles = {
     },
     "active": {
         "background-color": "white",
-        "color": "black", #"var(--text-color)",
+        "color": "black",
         "font-weight": "normal",
         "padding": "14px",
     }
 }
+
+# Options for the navigation bar
 options = {
     "show_menu": True,
     "show_sidebar": False,
 }
 
+# Create the navigation bar
 page = st_navbar(
     pages,
     selected='Home',
     logo_path=logo_path,
-
     styles=styles,
     options=options,
 )
 
-# Page content based on selected tab
+# ✅ Debug output to check what's being returned
+st.write("Selected page:", page)
+
+# Render the appropriate page content
 if page == "Home":
     st.title("🏠 Welcome to the Home Page!")
     st.write("This is your dashboard. Use the menu to navigate.")
