@@ -1,40 +1,40 @@
 import streamlit as st
-import streamlit_navigation_bar
+# import streamlit_navigation_bar
 from streamlit_navigation_bar import st_navbar
 pages = ["Home", "Data", "Match", "Predict", "Settings", "Help"]
 
-logo_path = None
-styles = {
-    "nav": {
-        "background-color": "#283747",
-        "justify-content": "left",
-    },
-    "img": {
-        "padding-right": "14px",
-    },
-    "span": {
-        "color": "white",
-        "padding": "14px",
-    },
-    "active": {
-        "background-color": "white",
-        "color": "black", #"var(--text-color)", # "black", #"var(--text-color)",
-        "font-weight": "normal",
-        "padding": "14px",
-    }
-}
-options = {
-    "show_menu": True,
-    "show_sidebar": False,
-}
+# logo_path = None
+# styles = {
+#     "nav": {
+#         "background-color": "#283747",
+#         "justify-content": "left",
+#     },
+#     "img": {
+#         "padding-right": "14px",
+#     },
+#     "span": {
+#         "color": "white",
+#         "padding": "14px",
+#     },
+#     "active": {
+#         "background-color": "white",
+#         "color": "black", #"var(--text-color)", # "black", #"var(--text-color)",
+#         "font-weight": "normal",
+#         "padding": "14px",
+#     }
+# }
+# options = {
+#     "show_menu": True,
+#     "show_sidebar": False,
+# }
 
 page = st_navbar(
     pages,
-    selected='Home',
-    logo_path=logo_path,
-
-    styles=styles,
-    options=options,
+    selected='Home'
+    # logo_path=logo_path,
+    #
+    # styles=styles,
+    # options=options,
 )
 
 # Page content based on selected tab
