@@ -1,51 +1,23 @@
 import streamlit as st
-# Make sure this import works in your deployment environment
-from streamlit_navigation_bar import st_navbar
 
-# Define your navigation pages
+# Define pages
 pages = ["Home", "Data", "Match", "Predict", "Settings", "Help"]
-logo_path = None  # Optional logo
 
-# Define styling for the navigation bar
-styles = {
-    "nav": {
-        "background-color": "#283747",
-        "justify-content": "left",
-    },
-    "img": {
-        "padding-right": "14px",
-    },
-    "span": {
-        "color": "white",
-        "padding": "14px",
-    },
-    "active": {
-        "background-color": "white",
-        "color": "black",
-        "font-weight": "normal",
-        "padding": "14px",
-    }
-}
+# Initialize session state
+if "selected_page" not in st.session_state:
+    st.session_state.selected_page = "Home"
 
-# Options for the navigation bar
-options = {
-    "show_menu": True,
-    "show_sidebar": False,
-}
+# Render navigation bar using Streamlit columns only
+cols = st.columns(len(pages))
+for i, page in enumerate(pages):
+    if cols[i].button(page):
+        st.session_state.selected_page = page
 
-# Create the navigation bar
-page = st_navbar(
-    pages,
-    selected='Home',
-    logo_path=logo_path,
-    styles=styles,
-    options=options,
-)
+# # Separator
+# st.divider()
 
-# ✅ Debug output to check what's being returned
-st.write("Selected page:", page)
-
-# Render the appropriate page content
+# Page content
+page = st.session_state.selected_page
 if page == "Home":
     st.title("🏠 Welcome to the Home Page!")
     st.write("This is your dashboard. Use the menu to navigate.")

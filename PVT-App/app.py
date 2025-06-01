@@ -1,43 +1,23 @@
 import streamlit as st
-# import streamlit_navigation_bar
-from streamlit_navigation_bar import st_navbar
+
+# Define pages
 pages = ["Home", "Data", "Match", "Predict", "Settings", "Help"]
 
-logo_path = None
-styles = {
-    "nav": {
-        "background-color": "#283747",
-        "justify-content": "left",
-    },
-    "img": {
-        "padding-right": "14px",
-    },
-    "span": {
-        "color": "white",
-        "padding": "14px",
-    },
-    "active": {
-        "background-color": "white",
-        "color": "black", #"var(--text-color)",
-        "font-weight": "normal",
-        "padding": "14px",
-    }
-}
-options = {
-    "show_menu": True,
-    "show_sidebar": False,
-}
+# Initialize session state
+if "selected_page" not in st.session_state:
+    st.session_state.selected_page = "Home"
 
-page = st_navbar(
-    pages,
-    selected='Home',
-    logo_path=logo_path,
+# Render navigation bar using Streamlit columns only
+cols = st.columns(len(pages))
+for i, page in enumerate(pages):
+    if cols[i].button(page):
+        st.session_state.selected_page = page
 
-    styles=styles,
-    options=options,
-)
+# # Separator
+# st.divider()
 
-# Page content based on selected tab
+# Page content
+page = st.session_state.selected_page
 if page == "Home":
     st.title("🏠 Welcome to the Home Page!")
     st.write("This is your dashboard. Use the menu to navigate.")
