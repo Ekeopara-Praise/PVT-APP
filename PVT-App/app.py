@@ -60,4 +60,4 @@ else:
     pg = st.navigation([login_page])
 
 pg.run()
-st.logo(r"logo.png")
+# st.logo(r"logo.png")
