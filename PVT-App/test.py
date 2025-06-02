@@ -16,6 +16,10 @@ def logout():
 login_page = st.Page(login, title="Log in", icon=":material/login:")
 logout_page = st.Page(logout, title="Log out", icon=":material/logout:")
 
+
+st.logo(LOGO_URL_LARGE, image="logo.png")
+
+
 # Home Menu
 home = st.Page(
     "Home/home.py", title="PVTSmart", icon=":material/home:", default=True
@@ -49,8 +53,8 @@ if st.session_state.logged_in:
 else:
     pg = st.navigation([login_page])
 
-pg.run()
 
+pg.run()
 # import streamlit as st
 #
 # # Define pages
