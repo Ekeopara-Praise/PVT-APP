@@ -8,7 +8,7 @@ st.set_page_config(layout="wide")
 
 # Place the logo in the center column
 # with coln2:
-st.logo("logo.PNG")
+st.logo("logo.png")
 
 # Initialize session state for login tracking
 if "logged_in" not in st.session_state:

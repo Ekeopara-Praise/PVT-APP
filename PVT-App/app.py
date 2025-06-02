@@ -2,13 +2,7 @@ import streamlit as st
 
 # Set page layout to wide for better positioning
 st.set_page_config(layout="wide")
-
-# Create three columns to center the logo
-# coln1, coln2, coln3 = st.columns([1, 3, 1])  # Middle column is wider
-
-# Place the logo in the center column
-# with coln2:
-st.logo("logo.PNG")
+st.logo("logo.png")
 
 # Initialize session state for login tracking
 if "logged_in" not in st.session_state:
