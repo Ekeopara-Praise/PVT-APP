@@ -74,9 +74,7 @@ st.logo(
     link="https://drive.google.com/file/d/1nmDg7VcwGCkt2I-yZVPOM69QLvkfdh1I/view?usp=sharing",
     image="https://drive.google.com/file/d/1nmDg7VcwGCkt2I-yZVPOM69QLvkfdh1I/view?usp=sharing"
 )
-# st.logo(image="logo.png")
-
-# https://drive.google.com/file/d/1nmDg7VcwGCkt2I-yZVPOM69QLvkfdh1I/view?usp=sharing
+st.logo(image="logo.png")
 
 # Home Menu
 home = st.Page(
