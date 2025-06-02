@@ -38,12 +38,12 @@ settings = st.Page("Settings/settings.py", title="Settings", icon=":material/set
 if st.session_state.logged_in:
     pg = st.navigation(
         {
-            "Account": [logout_page],
             "Home": [home],
             "Data": [upload_data, view_data],
             "Match": [black_oil_correlation, view_results],
             "Predict": [predict],
             "Settings": [settings],
+            "Exit App": [logout_page],
         }
     )
 else:
