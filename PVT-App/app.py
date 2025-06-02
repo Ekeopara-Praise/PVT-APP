@@ -1,40 +1,56 @@
 import streamlit as st
 
+# Set page layout to wide for better positioning
+st.set_page_config(layout="wide")
+
+# Create three columns to center the logo
+# coln1, coln2, coln3 = st.columns([1, 3, 1])  # Middle column is wider
+
+# Place the logo in the center column
+# with coln2:
+st.logo("logo.PNG")
+
+# Initialize session state for login tracking
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 
+# Login Form
 def login():
-    if st.button("Log in"):
-        st.session_state.logged_in = True
-        st.rerun()
+    with st.form(key="login_form", border=True):
+        coln1, coln2, coln3 = st.columns([1.5, 1, 1.5])
+        with coln2:
+            st.image("logo.PNG")
+            login_button = st.form_submit_button("Log in", use_container_width=True)
+            if login_button:
+                st.session_state.logged_in = True
+                st.rerun()
 
+# Logout Form
 def logout():
-    if st.button("Log out"):
-        st.session_state.logged_in = False
-        st.rerun()
+    with st.form(key="logout_form", border=True):
+        coln1, coln2, coln3 = st.columns([1.5, 1, 1.5])
+        with coln2:
+            st.image("logo.PNG")
+        #st.write("Log out from your account")
+            logout_button = st.form_submit_button("Log out", use_container_width=True)
+            if logout_button:
+                st.session_state.logged_in = False
+                st.rerun()
 
+# Define Login/Logout Pages
 login_page = st.Page(login, title="Log in", icon=":material/login:")
 logout_page = st.Page(logout, title="Log out", icon=":material/logout:")
 
-# Home Menu
-home = st.Page(
-    "Home/home.py", title="PVTSmart", icon=":material/home:", default=True
-)
-# Data Menu
-upload_data = st.Page("Data/upload_data.py", title="Upload data", icon=":material/upload:",)
-view_data = st.Page("Data/view_data.py", title="View data", icon=":material/visibility:",)
-
-# Match Menu
+# Define App Menu Structure
+home = st.Page("Home/home.py", title="PVTSmart", icon=":material/home:", default=True)
+upload_data = st.Page("Data/upload_data.py", title="Upload data", icon=":material/upload:")
+view_data = st.Page("Data/view_data.py", title="View data", icon=":material/visibility:")
 black_oil_correlation = st.Page("Match/BlackOil_correlation.py", title="Black oil correlation", icon=":material/schema:")
 view_results = st.Page("Match/view_results.py", title="View results", icon=":material/visibility:")
-
-# Predict Menu
 predict = st.Page("Predict/predict.py", title="Predict", icon=":material/timeline:")
-
-# Settings Menu
 settings = st.Page("Settings/settings.py", title="Settings", icon=":material/settings:")
 
-
+# Navigation logic based on login state
 if st.session_state.logged_in:
     pg = st.navigation(
         {
