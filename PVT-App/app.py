@@ -2,7 +2,7 @@ import streamlit as st
 
 # Set page layout to wide for better positioning
 st.set_page_config(layout="wide")
-st.logo("\PVT-App\PVT-App\logo.png")
+#st.logo("\PVT-App\PVT-App\logo.png")
 
 # Initialize session state for login tracking
 if "logged_in" not in st.session_state:
