@@ -17,8 +17,13 @@ login_page = st.Page(login, title="Log in", icon=":material/login:")
 logout_page = st.Page(logout, title="Log out", icon=":material/logout:")
 
 
-st.logo(LOGO_URL_LARGE, image="logo.png")
+st.logo(
+    link="https://drive.google.com/file/d/1nmDg7VcwGCkt2I-yZVPOM69QLvkfdh1I/view?usp=sharing",
+    image="https://drive.google.com/file/d/1nmDg7VcwGCkt2I-yZVPOM69QLvkfdh1I/view?usp=sharing"
+)
+# st.logo(image="logo.png")
 
+# https://drive.google.com/file/d/1nmDg7VcwGCkt2I-yZVPOM69QLvkfdh1I/view?usp=sharing
 
 # Home Menu
 home = st.Page(
