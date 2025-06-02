@@ -70,7 +70,7 @@ login_page = st.Page(login, title="Log in", icon=":material/login:")
 logout_page = st.Page(logout, title="Log out", icon=":material/logout:")
 
 
-st.logo(image="logo.png")
+# st.logo(image="logo.png")
 
 # Home Menu
 home = st.Page(
