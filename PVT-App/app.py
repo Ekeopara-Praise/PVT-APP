@@ -13,7 +13,7 @@ def login():
     with st.form(key="login_form", border=True):
         coln1, coln2, coln3 = st.columns([1.5, 1, 1.5])
         with coln2:
-            st.image("logo.PNG")
+            st.image("logo_.jpg")
             login_button = st.form_submit_button("Log in", use_container_width=True)
             if login_button:
                 st.session_state.logged_in = True
@@ -24,7 +24,7 @@ def logout():
     with st.form(key="logout_form", border=True):
         coln1, coln2, coln3 = st.columns([1.5, 1, 1.5])
         with coln2:
-            st.image("logo.PNG")
+            st.image("logo_.jpg")
         #st.write("Log out from your account")
             logout_button = st.form_submit_button("Log out", use_container_width=True)
             if logout_button:
