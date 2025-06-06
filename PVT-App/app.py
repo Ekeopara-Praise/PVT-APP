@@ -22,7 +22,7 @@ def load_image(image_path):
         return None
 
 
-# Login Form (now with proper submit button)
+# Login Form
 def login():
     with st.form(key="login_form", border=True):
         coln1, coln2, coln3 = st.columns([1.5, 1, 1.5])
@@ -33,21 +33,13 @@ def login():
             else:
                 st.warning("Logo image not found")
 
-            # # Added username/password fields for proper form submission
-            # username = st.text_input("Username")
-            # password = st.text_input("Password", type="password")
-
-            # Proper submit button
             submitted = st.form_submit_button("Log in", use_container_width=True)
             if submitted:
-                # if username and password:  # Basic validation
                 st.session_state.logged_in = True
                 st.rerun()
-                # else:
-                #     st.error("Please enter both username and password")
 
 
-# Logout Form (with proper submit button)
+# Logout Form
 def logout():
     with st.form(key="logout_form", border=True):
         coln1, coln2, coln3 = st.columns([1.5, 1, 1.5])
@@ -58,7 +50,6 @@ def logout():
             else:
                 st.warning("Logo image not found")
 
-            # Proper submit button
             submitted = st.form_submit_button("Log out", use_container_width=True)
             if submitted:
                 st.session_state.logged_in = False
@@ -79,19 +70,31 @@ view_results = st.Page("Match/view_results.py", title="View results", icon=":mat
 predict = st.Page("Predict/predict.py", title="Predict", icon=":material/timeline:")
 settings = st.Page("Settings/settings.py", title="Settings", icon=":material/settings:")
 
-# Navigation logic based on login state
-if st.session_state.logged_in:
-    pg = st.navigation(
-        {
-            "Home": [home],
-            "Data": [upload_data, view_data],
-            "Match": [black_oil_correlation, view_results],
-            "Predict": [predict],
-            "Settings": [settings],
-            "Exit App": [logout_page],
-        }
-    )
-else:
-    pg = st.navigation([login_page])
 
-pg.run()
+# Main app logic
+def main():
+    # Add logo to sidebar using st.logo()
+    logo_path = load_image("logo_.jpg")
+    if logo_path:
+        st.logo(logo_path)
+
+    # Navigation based on auth state
+    if st.session_state.logged_in:
+        pg = st.navigation(
+            {
+                "Home": [home],
+                "Data": [upload_data, view_data],
+                "Match": [black_oil_correlation, view_results],
+                "Predict": [predict],
+                "Settings": [settings],
+                "Exit App": [logout_page],
+            }
+        )
+    else:
+        pg = st.navigation([login_page])
+
+    pg.run()
+
+
+if __name__ == "__main__":
+    main()
