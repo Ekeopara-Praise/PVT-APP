@@ -27,7 +27,7 @@ def login():
     with st.form(key="login_form", border=True):
         coln1, coln2, coln3 = st.columns([1.5, 1, 1.5])
         with coln2:
-            logo_path = load_image("logo_.jpg")
+            logo_path = load_image("logo.png")
             if logo_path:
                 st.image(logo_path)
             else:
@@ -44,7 +44,7 @@ def logout():
     with st.form(key="logout_form", border=True):
         coln1, coln2, coln3 = st.columns([1.5, 1, 1.5])
         with coln2:
-            logo_path = load_image("logo_.jpg")
+            logo_path = load_image("logo.png")
             if logo_path:
                 st.image(logo_path)
             else:
@@ -74,7 +74,7 @@ settings = st.Page("Settings/settings.py", title="Settings", icon=":material/set
 # Main app logic
 def main():
     # Add logo to sidebar using st.logo()
-    logo_path = load_image("logo_.jpg")
+    logo_path = load_image("logo.png")
     if logo_path:
         st.logo(logo_path)
 
