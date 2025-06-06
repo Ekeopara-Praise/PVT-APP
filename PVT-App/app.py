@@ -69,7 +69,7 @@ black_oil_correlation = st.Page("Match/BlackOil_correlation.py", title="Black oi
 view_results = st.Page("Match/view_results.py", title="View results", icon=":material/visibility:")
 predict = st.Page("Predict/predict.py", title="Predict", icon=":material/timeline:")
 settings = st.Page("Settings/settings.py", title="Settings", icon=":material/settings:")
-
+help = st.Page("help/help.py", title="Help", icon=":material/help:")
 
 # Main app logic
 def main():
@@ -87,6 +87,7 @@ def main():
                 "Match": [black_oil_correlation, view_results],
                 "Predict": [predict],
                 "Settings": [settings],
+                "Help": [help],
                 "Exit App": [logout_page],
             }
         )

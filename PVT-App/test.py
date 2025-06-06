@@ -27,7 +27,7 @@ def login():
     with st.form(key="login_form", border=True):
         coln1, coln2, coln3 = st.columns([1.5, 1, 1.5])
         with coln2:
-            logo_path = load_image("logo_.jpg")
+            logo_path = load_image("logo.png")
             if logo_path:
                 st.image(logo_path)
             else:
@@ -44,7 +44,7 @@ def logout():
     with st.form(key="logout_form", border=True):
         coln1, coln2, coln3 = st.columns([1.5, 1, 1.5])
         with coln2:
-            logo_path = load_image("logo_.jpg")
+            logo_path = load_image("logo.png")
             if logo_path:
                 st.image(logo_path)
             else:
@@ -69,12 +69,12 @@ black_oil_correlation = st.Page("Match/BlackOil_correlation.py", title="Black oi
 view_results = st.Page("Match/view_results.py", title="View results", icon=":material/visibility:")
 predict = st.Page("Predict/predict.py", title="Predict", icon=":material/timeline:")
 settings = st.Page("Settings/settings.py", title="Settings", icon=":material/settings:")
-
+help = st.Page("help/help.py", title="Help", icon=":material/help:")
 
 # Main app logic
 def main():
     # Add logo to sidebar using st.logo()
-    logo_path = load_image("logo_.jpg")
+    logo_path = load_image("logo.png")
     if logo_path:
         st.logo(logo_path)
 
@@ -87,6 +87,7 @@ def main():
                 "Match": [black_oil_correlation, view_results],
                 "Predict": [predict],
                 "Settings": [settings],
+                "Help": [help],
                 "Exit App": [logout_page],
             }
         )
