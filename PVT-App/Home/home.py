@@ -34,7 +34,7 @@ def load_image(image_path):
 logo_path = load_image("logo.png")
 
 with left_col:
-    st.image(logo_path, width=500)  # Make sure this logo file is in the root directory
+    st.image(logo_path)  # Make sure this logo file is in the root directory
 
 with right_col:
     st.markdown("""
