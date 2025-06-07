@@ -4,7 +4,7 @@ st.write("Welcome!... work in progress...")
 #
 # # Page config
 # #st.set_page_config(page_title="PVTSmart", layout="wide")
-# 
+#
 # # Title
 # title_html = """
 # <h1 style="font-family: serif; color:white; font-size: 24px; text-align: center;">
