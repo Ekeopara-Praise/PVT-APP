@@ -1,5 +1,5 @@
 import streamlit as st
-
+from pathlib import Path
 # Set page configuration
 # st.set_page_config(page_title="PVTSmart", layout="wide")
 
@@ -17,8 +17,24 @@ st.markdown(page_bg, unsafe_allow_html=True)
 # -------- Two-column Layout --------
 left_col, right_col = st.columns([1, 1.2])
 
+
+# Function to handle image loading safely
+def load_image(image_path):
+    try:
+        resolved_path = Path(__file__).parent / image_path
+        if resolved_path.exists():
+            return str(resolved_path)
+        if Path(image_path).exists():
+            return image_path
+        raise FileNotFoundError
+    except:
+        return None
+
+ # Add logo to sidebar using st.logo()
+logo_path = load_image("logo.png")
+
 with left_col:
-    st.image("logo.png", width=500)  # Make sure this logo file is in the root directory
+    st.image(logo_path, width=500)  # Make sure this logo file is in the root directory
 
 with right_col:
     st.markdown("""
