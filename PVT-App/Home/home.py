@@ -33,9 +33,9 @@ def load_image(image_path):
  # Add logo to sidebar using st.logo()
 
 
-# with left_col:
-#     logo_path = load_image("logo.png")
-#     st.image(logo_path)  # Make sure this logo file is in the root directory
+with left_col:
+    logo_path = load_image("logo.png")
+    st.image(logo_path)  # Make sure this logo file is in the root directory
 
 with right_col:
     st.markdown("""
