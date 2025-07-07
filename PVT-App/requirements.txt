@@ -1,1 +1,2 @@
 streamlit-navigation-bar==3.3.0
+XlsxWriter
