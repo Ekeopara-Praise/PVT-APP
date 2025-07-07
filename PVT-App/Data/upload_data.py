@@ -1,7 +1,10 @@
 # import libraries
 from dataclasses import dataclass
 import streamlit as st
-
+import pandas as pd
+import numpy as np
+from pathlib import Path
+from io import BytesIO
 
 @dataclass
 class Sand_Installation:
@@ -154,6 +157,37 @@ col1, col2 = st.columns(2)
 
 # Add a heading for the "Reservoir Characteristics Data" section
 # st.write('**Reservoir Characteristics Data**')
+with st.expander("✨ Enter Reservoir Information", expanded=True):
+    # Divide the expander into three columns for input fields
+    col1, col2, col3 = st.columns(3)
+
+    # Add a selectbox for "Production rate" in the first column with a description in the help tooltip
+    with col1:
+        prod_rate = st.text_input(
+            "**Reservoir Name**",
+            placeholder ='E4000X',
+            help="""
+            Enter the suitable production rate condition.
+            """,
+        )
+
+    # Add a selectbox for "Water cut" in the second column with a description in the help tooltip
+    with col2:
+        waterCut = st.number_input(
+            "**Reservoir Pressure (psia)**",
+            help="""
+            Select the suitable Degree of Water cut.
+            """,
+        )
+
+    # Add a selectbox for "Completion type" in the third column with a description in the help tooltip
+    with col3:
+        completionType = st.number_input(
+            "**Reservoir Temperature (F)**",
+            help="""
+               Select the suitable well completion type.
+               """,
+        )
 
 # Create an expander to contain input fields for the "Reservoir Data" section
 with st.expander("✨ Enter Fluid Information", expanded=True):
@@ -163,7 +197,7 @@ with st.expander("✨ Enter Fluid Information", expanded=True):
     # Add a selectbox for "Rock Consolidation" in the first column with a description in the help tooltip
     with col1:
         rock_compressive_strength = st.number_input(
-            "**Rock strength (psi)**",
+            "**Bubble point pressure (psia)**",
             help="""
             Enter the Rock compressive strength.
             """,
@@ -172,7 +206,7 @@ with st.expander("✨ Enter Fluid Information", expanded=True):
     # Add a selectbox for "Permeability (mD)" in the second column with a description in the help tooltip
     with col2:
         perm = st.number_input(
-            "**Permeability (mD)**",
+            "**Oil API Gravity**",
             help="""
             Enter the reservoir permeability mD.
             """,
@@ -181,7 +215,7 @@ with st.expander("✨ Enter Fluid Information", expanded=True):
     # Add a selectbox for "Grain size" in the third column with a description in the help tooltip
     with col3:
         poro = st.number_input(
-            "**Porosity (%)**",
+            "**Gas Gravity**",
             help="Enter the formation porosity",
         )
 
@@ -191,135 +225,108 @@ with st.expander("✨ Enter Fluid Information", expanded=True):
             "**Fluid viscosity (cP)**",
             help="Enter the suitable Fluid viscosity")
 
-# Add a heading for the "Production & Completion Data" section
-# st.write('**Production & Completion Data**')
-# Create an expander to contain input fields for the "Production and Completion Data" section
-with st.expander("✨ Enter Reservoir Information", expanded=True):
-    # Divide the expander into three columns for input fields
-    col1, col2, col3 = st.columns(3)
+with st.expander("✨ Enter Separator Information", expanded=True):
+    # Divide the expander into four columns for input fields
+    col1, col2, col3, col4 = st.columns(4)
 
-    # Add a selectbox for "Production rate" in the first column with a description in the help tooltip
+    # Add a selectbox for "Rock Consolidation" in the first column with a description in the help tooltip
     with col1:
-        prod_rate = st.selectbox(
-            "**Production rate**",
-            ("Above critical rate", 'Below critical rate', "None"),
+        rock_compressive_strength = st.number_input(
+            "**Bodb**",
             help="""
-            Enter the suitable production rate condition.
+            Enter the Rock compressive strength.
             """,
         )
 
-    # Add a selectbox for "Water cut" in the second column with a description in the help tooltip
+    # Add a selectbox for "Permeability (mD)" in the second column with a description in the help tooltip
     with col2:
-        waterCut = st.number_input(
-            "**Water cut (%)**",
+        perm = st.number_input(
+            "**Bofb**",
             help="""
-            Select the suitable Degree of Water cut.
+            Enter the reservoir permeability mD.
             """,
         )
 
-    # Add a selectbox for "Completion type" in the third column with a description in the help tooltip
+    # Add a selectbox for "Grain size" in the third column with a description in the help tooltip
     with col3:
-        completionType = st.selectbox(
-            "**Completion type**",
-            ("Cased or Liner", "Openhole or Barefoot"),
-            key='completionType',
-            help="""
-               Select the suitable well completion type.
-               """,
+        poro = st.number_input(
+            "**Rsdb**",
+            help="Enter the formation porosity",
         )
 
-# Add a heading for the "Economic & Environmental Data" section
-#st.write('**Economic & Environmental Data**')
+    # Add a selectbox for "Fluid viscosity" in the fourth column with a description in the help tooltip
+    with col4:
+        fluid_visco = st.number_input(
+            "**Rsfb**",
+            help="Enter the suitable Fluid viscosity")
+
+
+def get_path(datapath):
+    try:
+        resolved_path = Path(__file__).parent / datapath
+        if resolved_path.exists():
+            return str(resolved_path)
+        if Path(datapath).exists():
+            return datapath
+        raise FileNotFoundError
+    except:
+        return None
+
 # Create an expander to contain input fields for the "Economic & Environmental Data" section
+@st.cache_data
+def get_data():
+    # Separate data for each sheet
+    CCE = pd.DataFrame(columns=[
+        'Pressure (psia)',
+        'Relative Volume',
+        'Y-Function',
+        'Density (g/cc)',
+        'Compressibility (1/psia)',
+        'Corrected Relative Volume'
+    ])
+
+    DLE = pd.DataFrame(columns=[
+        'Pressure (psig)',
+        'Solution Gas / Oil RatioRsd, (Scf/Stb)',
+        'Relative Oil Volume Bod, (Bbl/Stb)',
+        'Oil Density (gm/cc)',
+        'Bg (cuft/SCF)',
+        'Gas Viscosity (cP)',
+        'Gas Density (g/cc)',
+        'Gas Z - Factor'
+    ])
+
+    separator = pd.DataFrame(columns=[
+        'Pressure (psia)',
+        'Temperature (F)',
+        'GOR (SCF/STB)',
+        'Oil Density (g/cc)',
+        'Gas MW (g/mol)',
+        'Gas Gravity(air = 1)',
+        'Sep vol factor(Sep bbl/St bbl)'
+    ])
+
+    return CCE, DLE, separator
+
+@st.cache_data
+def convert_to_excel(sheet1, sheet2, sheet3):
+    output = BytesIO()
+    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+        sheet1.to_excel(writer, sheet_name='CCE', index=False)
+        sheet2.to_excel(writer, sheet_name='DLE', index=False)
+        sheet3.to_excel(writer, sheet_name='separator', index=False)
+    return output.getvalue()
+
+sheet1, sheet2, sheet3 = get_data()
+excel_data = convert_to_excel(sheet1, sheet2, sheet3)
+
 with st.expander("✨ Upload PVT Lab Reports", expanded=True):
-    # Divide the expander into second columns for input fields
-    #col1, col2 = st.columns(2)
-    st.button(label="Export file template",
-              help='Click to recommend Sand Control installation',
-              use_container_width=True)
+    st.download_button(
+        label="Export Excel",
+        data=excel_data,
+        file_name="pvt_data_template.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        use_container_width=True
+    )
 
-    # Add a selectbox for "Economic feasibility" in the first column with a description in the help tooltip
-    # with col1:
     uploaded_files = st.file_uploader('Kindly upload the data file you have populated!', accept_multiple_files=True)
-    # feasibility = st.selectbox(
-    #     "**Economic feasibility**",
-    #     ("Positive", "Negative", 'Can be sorted'),
-    #     key='feasibility',
-    #     help="""
-    #     Select the suitable economic feasibility of the project.
-    #     """,
-    # )
-
-    # Add a selectbox for "Environmental impact" in the second column with a description in the help tooltip
-    # with col2:
-    # st.write("")
-    # st.write("")
-    # st.write("")
-    #col1, col2, col3, col4 = st.columns(4)
-    #with col2:
-
-        # environmental_impact = st.selectbox(
-        #     "**Environmental impact**",
-        #     ("Minimal", "Maximal"),
-        #     key='environmental_impact',
-        #     help="""
-        #     Select the suitable environmental impact of the project.
-        #     """,
-        # )
-
-#     # Create an instance of the Sand_Installation class
-#     sand_control = Sand_Installation()
-#
-#     # Calculate the reservoir_data, production_data, completion_data, economic_data, and environmental_data based on the input
-#     reservoir_data = sand_control.Reservoir_Data(rock_compressive_strength, perm, poro, fluid_visco)
-#     production_data = sand_control.Production_Data(prod_rate, waterCut)
-#     completion_data = sand_control.Well_Completion_Data(completionType)
-#     economic_data = sand_control.Economic_Data(feasibility)
-#     environmental_data = sand_control.Environmental_Data(feasibility)
-#
-#     # Create a list of the calculated data
-#     general_decision_list = [reservoir_data, production_data, completion_data, economic_data, environmental_data]
-#
-#     # Find the most common item in the list
-#     most_common = max(set(general_decision_list), key=general_decision_list.count)
-#
-#     # Create two columns to display the recommendation and a button to trigger the recommendation
-#     col1, col2 = st.columns(2)
-#     with col1:
-#         if st.button(label="Recommend", help='Click to recommend Sand Control installation'):
-#             if economic_data == 0:
-#                 col2.write('<span style="color: red;">**Do not Install Sand Control Facilities!**</span>',
-#                            unsafe_allow_html=True)
-#             # Display a recommendation based on the most common item in the list
-#             elif most_common == 1:
-#                 col2.write('<span style="color: red;">**Install Sand Control Facilities!**</span>',
-#                            unsafe_allow_html=True)
-#             elif most_common == 0:
-#                 col2.write('<span style="color: red;">**Do not Install Sand Control Facilities!**</span>',
-#                            unsafe_allow_html=True)
-#             else:
-#                 col2.write('<span style="color: red;">**Check information entered!**</span>', unsafe_allow_html=True)
-#
-# # # Describes the Software in the 'About' section
-# #with tab2:
-#     # st.write("## Welcome to SCID! 👋")
-#     #
-#     # st.markdown(
-#         """
-#         **SCID** is a **S**and **C**ontrol **I**nstallation **D**ecision-making software designed for Production and other Energy experts
-#         for faster and reliable decision making on whether to install Sand Control facilities or not.
-#
-#         It's credibility is attributed to it's vast factor considerations leveraging various information of the well
-#         such as;
-#
-#         1. Reservoir Characteristics
-#         2. Production information
-#         3. Completion types
-#         4. Environmental impact information
-#         5. Economic feasibility information
-#
-#         Enjoy the decision making power of **SCID** with a simple click on the "**Recommend**" button !
-#
-#
-#         ### Have a demo today!
-#         # """
